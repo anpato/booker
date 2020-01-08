@@ -20,26 +20,12 @@ class EmployeeController {
     }
   }
 
-  CheckIfSlotIsAvailable = async (req, res, next) => {
+  UpdateAppointment = (req, res) => {
     try {
-      const ExistingAppointment = await Appointment.findOne().where({
-        day: req.body.appointment.day,
-        slot: req.body.appointment.slot,
-        service_provider: res.locals.employee._id
-      })
-      return ExistingAppointment
-        ? res.status(400).json({ message: 'Slot is no longer available.' })
-        : next()
+      // await Appointment.findOneAndUpdate({})
     } catch (error) {
       throw error
     }
-  }
-
-  FindUserAndEmployee = async (req, res, next) => {
-    const user = await User.findOne({ _id: req.query.user })
-    const employee = await Employee.findOne({ _id: req.query.provider })
-    res.locals = { user, employee }
-    next()
   }
 }
 

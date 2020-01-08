@@ -23,6 +23,22 @@ class AppointmentController {
       throw error
     }
   }
+
+  UpdateAppointment = async (req, res) => {
+    try {
+      await Appointment.findByIdAndUpdate(
+        req.params.appointment_id,
+        { ...req.body.appointment },
+        { new: true },
+        (err, doc) => {
+          if (err) throw err
+          res.send(doc)
+        }
+      )
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 export default AppointmentController

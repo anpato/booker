@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import EmployeeController from '../controllers/EmployeeController'
 import { VerifyIsUserValid } from '../middleware'
-
+import * as resolvers from '../controllers/resolvers'
 const EmployeeRouter = Router()
 
 const controller = new EmployeeController()
@@ -11,9 +11,9 @@ const controller = new EmployeeController()
 // ex: /api/employees/?user=user_id&provider=employee_id
 EmployeeRouter.post(
   '/',
-  controller.FindUserAndEmployee,
+  resolvers.FindUserAndEmployee,
   VerifyIsUserValid,
-  controller.CheckIfSlotIsAvailable,
+  resolvers.CheckIfSlotIsAvailable,
   controller.AddAppointmentSlotToEmployee
 )
 
