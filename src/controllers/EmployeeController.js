@@ -1,51 +1,11 @@
-import { Employee } from '../database/Schema'
+import { Employee, User } from '../database/Schema'
 
 class EmployeeController {
-  show = async (req, res) => {
+  addAppointmentSlotToEmployee = async (req, res) => {
     try {
-      /*
-      Insert Queries Here
-      */
-    } catch (error) {
-      throw error
-    }
-  }
-
-  getById = async (req, res) => {
-    try {
-      /*
-      Insert Queries Here
-      */
-    } catch (error) {
-      throw error
-    }
-  }
-
-  create = async (req, res) => {
-    try {
-      /*
-      Insert Queries Here
-      */
-    } catch (error) {
-      throw error
-    }
-  }
-
-  destroy = async (req, res) => {
-    try {
-      /*
-      Insert Queries Here
-      */
-    } catch (error) {
-      throw error
-    }
-  }
-
-  update = async (req, res) => {
-    try {
-      /*
-      Insert Queries Here
-      */
+      const user = await User.findOne({ _id: req.query.user })
+      const employee = await Employee.findOne({ _id: req.query.provider })
+      console.log(user, employee)
     } catch (error) {
       throw error
     }

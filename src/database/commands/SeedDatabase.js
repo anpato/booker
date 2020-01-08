@@ -8,7 +8,7 @@ const main = async () => {
   await CreateSeedFiles()
   console.info(chalk.green('Inserting Json Files'))
   exec(
-    'mongoimport --jsonArray --db booker_development  --collection employees --file  ./src/database/data/Employees.json && mongoimport --jsonArray --db booker_development   --collection businesses --file   ./src/database/data/Businesses.json',
+    'mongoimport --jsonArray --db booker_development  --collection employees --file  ./src/database/data/Employees.json && mongoimport --jsonArray --db booker_development   --collection businesses --file   ./src/database/data/Businesses.json && mongoimport --jsonArray --db booker_development   --collection    users --file   ./src/database/data/Users.json ',
     err => {
       if (err) throw err
     }

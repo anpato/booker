@@ -5,6 +5,7 @@ const EmployeeRouter = Router()
 
 const controller = new EmployeeController()
 
-EmployeeRouter.get('/', controller.show)
+// EmployeeRouter.get('/', controller.show)
+EmployeeRouter.post('/', controller.addAppointmentSlotToEmployee)
 
 export default EmployeeRouter

@@ -4,9 +4,10 @@ import BusinessController from '../controllers/BusinessController'
 const BusinessRouter = Router()
 const controller = new BusinessController()
 
-BusinessRouter.get('/', controller.show)
-BusinessRouter.post('/', controller.create)
-BusinessRouter.put('/', controller.addEmployeesToBusiness)
+BusinessRouter.get('/', controller.showBusinesses)
+BusinessRouter.post('/', controller.createNewBusiness)
+BusinessRouter.put('/:business_id', controller.addEmployeesToBusiness)
+BusinessRouter.put('/:business_id/details', controller.updateBusiness)
 BusinessRouter.get('/:business_id', controller.getBusinessById)
 
 export default BusinessRouter

@@ -35,7 +35,7 @@ const createBusinesses = lenOfItems => {
     }
     businesses.push(business)
   }
-  writeToJSONFile('Businesses.json', JSON.stringify(businesses, null, 2))
+  writeToJSONFile('Businesses', JSON.stringify(businesses, null, 2))
 }
 
 const createEmployee = lenOfItems => {
@@ -44,18 +44,33 @@ const createEmployee = lenOfItems => {
   for (let index = 0; index < lenOfItems; index++) {
     const employee = {
       name: faker.name.findName(),
+      profile_img: faker.image.avatar(),
       email: faker.internet.email(),
       business_id: null,
       isAdmin: faker.random.boolean()
     }
     employees.push(employee)
   }
-  writeToJSONFile('Employees.json', JSON.stringify(employees, null, 2))
+  writeToJSONFile('Employees', JSON.stringify(employees, null, 2))
+}
+
+const createUsers = lenOfItems => {
+  let users = []
+  for (let index = 0; index < lenOfItems; index++) {
+    const user = {
+      name: faker.name.findName(),
+      email: faker.internet.email(),
+      password_digest: faker.random.uuid(),
+      isVerified: faker.random.boolean()
+    }
+    users.push(user)
+  }
+  writeToJSONFile('Users', JSON.stringify(users, null, 2))
 }
 
 const writeToJSONFile = (filename, data) =>
   fs.writeFile(
-    `${process.cwd()}/./src/database/data/${filename}`,
+    `${process.cwd()}/./src/database/data/${filename}.json`,
     data,
     err => {
       if (err) throw err
@@ -67,4 +82,5 @@ export const CreateSeedFiles = () => {
   const lenOfItems = 400
   createBusinesses(lenOfItems)
   createEmployee(lenOfItems)
+  createUsers(lenOfItems)
 }

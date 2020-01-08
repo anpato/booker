@@ -20,10 +20,10 @@ const BusinessSchema = new Schema(
     employees: {
       type: [
         {
-          type: Schema.Types.ObjectId
+          type: Schema.Types.ObjectId,
+          ref: 'employees'
         }
-      ],
-      ref: 'employees'
+      ]
     }
   },
   {

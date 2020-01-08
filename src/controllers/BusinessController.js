@@ -2,7 +2,7 @@ import { Business, Employee } from '../database/Schema'
 import { InsertEmployeeAndBusinessMutation } from './mutations/AddEmployeeToBusiness'
 
 class BusinessController {
-  show = async (req, res) => {
+  showBusinesses = async (req, res) => {
     try {
       const businesses = await Business.find()
       res.send(businesses)
@@ -13,7 +13,27 @@ class BusinessController {
 
   getBusinessById = async (req, res) => {
     try {
-      res.send(await Business.findById(req.params.business_id))
+      await Business.findOne({
+        _id: req.params.business_id
+      })
+        .populate('employees')
+        .exec((err, data) => res.send(data))
+    } catch (error) {
+      throw error
+    }
+  }
+
+  updateBusiness = async (req, res) => {
+    try {
+      await Business.findByIdAndUpdate(
+        req.params.business_id,
+        req.body.business,
+        { new: true },
+        (err, doc) => {
+          if (err) throw err
+          res.send(doc)
+        }
+      )
     } catch (error) {
       throw error
     }
@@ -21,16 +41,31 @@ class BusinessController {
 
   addEmployeesToBusiness = async (req, res) => {
     try {
-      // console.log(businesses, employees)
-      if (await InsertEmployeeAndBusinessMutation(employees, businesses)) {
-        res.json({ message: 'Inserted Employees into Businesses' })
-      }
+      const employeeIds = await req.body.employees.map(employee => {
+        const InsertedEmployee = new Employee({
+          ...employee,
+          business_id: req.params.business_id
+        })
+        InsertedEmployee.save()
+        return InsertedEmployee._id
+      })
+      await Business.findByIdAndUpdate(
+        req.params.business_id,
+        {
+          $push: { employees: employeeIds }
+        },
+        { new: true },
+        (err, doc) => {
+          if (err) throw err
+          res.send(doc)
+        }
+      )
     } catch (error) {
       throw error
     }
   }
 
-  create = async (req, res) => {
+  createNewBusiness = async (req, res) => {
     try {
       const business = new Business(req.body.business)
       business.save()
@@ -41,16 +76,6 @@ class BusinessController {
   }
 
   destroy = async (req, res) => {
-    try {
-      /*
-      Insert Queries Here
-      */
-    } catch (error) {
-      throw error
-    }
-  }
-
-  update = async (req, res) => {
     try {
       /*
       Insert Queries Here
