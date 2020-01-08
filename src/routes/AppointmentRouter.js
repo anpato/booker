@@ -10,8 +10,8 @@ AppointmentRouter.get('/active', controller.FindAllActiveAppointments)
 AppointmentRouter.get('/employee/:provider_id', controller.FindAllAppointments)
 AppointmentRouter.put(
   '/:appointment_id/employee/:employee_id',
-  resolvers.FindEmployee,
-  validators.VerifyEmployeeIsAdmin,
+  resolvers.FindEmployeeAndAppointment,
+  validators.VerifyEmployeeCanEdit,
   controller.UpdateAppointment
 )
 
