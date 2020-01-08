@@ -1,4 +1,4 @@
-import Database from '../tools/Database'
+import Database from '../Database'
 import { exec } from 'child_process'
 import { CreateSeedFiles } from './CreateSeeds'
 import chalk from 'chalk'

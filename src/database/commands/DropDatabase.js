@@ -1,10 +1,16 @@
-import Database from '../tools/Database'
-import chalk from 'chalk'
+import Database from '../Database'
 
-const main = () => {
+const main = async () => {
   const db = new Database()
-  db.DropDB()
-  console.info(chalk.green('Database reset successfully'))
+  await db.DropDB()
 }
 
-main()
+const run = async () => {
+  try {
+    await main()
+  } catch (error) {
+    throw erro
+  }
+}
+
+run()

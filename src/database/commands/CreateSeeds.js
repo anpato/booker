@@ -67,5 +67,4 @@ export const CreateSeedFiles = () => {
   const lenOfItems = 400
   createBusinesses(lenOfItems)
   createEmployee(lenOfItems)
-  console.info(chalk.greenBright('Created Seed Data'))
 }

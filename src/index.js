@@ -1,17 +1,17 @@
 import express from 'express'
 import middleWare from './config/ServerConfig'
 import Router from './routes'
-import { db } from './config'
-import { connect, connection } from 'mongoose'
 import { PORT } from './env'
+import Database from './database/Database'
+import chalk from 'chalk'
 
 class App {
-  constructor(port, middleWare, database, baseRoute) {
+  constructor(port, middleWare, baseRoute) {
     this.app = express()
     this.port = port
     this.middleWare = middleWare
-    this.database = database
     this.baseRoute = baseRoute
+    this.database = new Database()
   }
   get() {
     this.app.get(this.baseRoute, (req, res) => res.json({ mdg: 'Portfolio' }))
@@ -19,7 +19,7 @@ class App {
 
   listen() {
     this.app.listen(this.port, () =>
-      console.info(`App Started on ${this.port}`)
+      console.info(`${chalk.green('Server Started on ')} port:${this.port}`)
     )
   }
 
@@ -30,14 +30,7 @@ class App {
     this.app.use('/api', Router)
   }
   connectDB() {
-    connect(this.database().connection, {
-      useNewUrlParser: true,
-      useFindAndModify: false,
-      useCreateIndex: true,
-      useUnifiedTopology: true
-    })
-    connection.once('open', () => {
-      console.log(`connected to ${this.database().name}`)
+    this.database.ConnectDB().once('open', () => {
       this.listen()
     })
   }
@@ -49,6 +42,6 @@ class App {
   }
 }
 
-const app = new App(PORT, middleWare, db, '/')
+const app = new App(PORT, middleWare, '/')
 
 app.initialize()

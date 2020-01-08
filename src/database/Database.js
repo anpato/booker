@@ -1,9 +1,9 @@
-import { Employee, Business } from '../Schema'
+import { Employee, Business } from './Schema'
 import { Types, connection, connect } from 'mongoose'
-import { db } from '../../config'
+import { db } from '../config'
 import chalk from 'chalk'
 
-export default class Database {
+class Database {
   constructor() {
     this.employees = []
     this.businesses = []
@@ -30,16 +30,13 @@ export default class Database {
     console.info(chalk.greenBright('Connecting to Database'))
     this.connect(this.db().connection, this.params)
     this.connection.once('open', () => {
-      console.info(
-        `${chalk.blueBright('Connected to:')}  ${chalk.bgGreen(this.db().name)}`
-      )
-      return this.connection
+      console.info(`${chalk.blueBright('Connected to:')}  ${this.db().name}`)
     })
+    return this.connection
   }
 
   DropDB = async () => {
-    await this.ConnectDB()
-    this.connection.once('open', async () => {
+    await this.ConnectDB().once('open', async () => {
       console.info(chalk.redBright('Droppping Database'))
       await this.connection.db.dropDatabase()
       console.info(chalk.redBright('Database Dropped'))
@@ -94,3 +91,5 @@ export default class Database {
     }
   }
 }
+
+export default Database
