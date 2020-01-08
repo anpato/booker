@@ -38,6 +38,7 @@ class App {
     })
     connection.once('open', () => {
       console.log(`connected to ${this.database().name}`)
+      this.listen()
     })
   }
   initialize() {
@@ -45,7 +46,6 @@ class App {
     this.init_middleWare()
     this.init_routes()
     this.connectDB()
-    this.listen()
   }
 }
 

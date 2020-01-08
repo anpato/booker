@@ -21,8 +21,6 @@ class BusinessController {
 
   addEmployeesToBusiness = async (req, res) => {
     try {
-      const employees = await Employee.find()
-      const businesses = await Business.find()
       // console.log(businesses, employees)
       if (await InsertEmployeeAndBusinessMutation(employees, businesses)) {
         res.json({ message: 'Inserted Employees into Businesses' })
