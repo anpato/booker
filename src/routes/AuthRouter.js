@@ -15,7 +15,7 @@ AuthRouter.post(
   Auth.LoginUser
 )
 AuthRouter.put(
-  '/verify/:token_id',
+  '/verify/user/:user_id/:token_id',
   resolvers.FindVerificationToken,
   Auth.VerifyUserAccount,
   resolvers.RemoveVerificationToken

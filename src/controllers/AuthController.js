@@ -2,6 +2,7 @@ import { SALT_ROUNDS, APP_SECRET } from '../env'
 import bcrypt from 'bcrypt'
 import jsonwebtoken from 'jsonwebtoken'
 import uuidV4 from 'uuid/v4'
+import * as mutations from './mutations'
 
 import { User, VerifcationToken } from '../database/Schema'
 export default class AuthController {
@@ -58,20 +59,18 @@ export default class AuthController {
     try {
       const { username, name, email, password } = res.locals.user
       const password_digest = await this.HashPassword(password, res)
-      const user = new User({
+      const user = mutations.InsertModel(User, {
         name,
         username,
         email,
         password_digest,
         isVerified: false
       })
-      const token = new VerifcationToken({
+      const token = mutations.InsertModel(VerifcationToken, {
         token: this.uuid(),
         user_id: user._id,
         expire_at: Date.now()
       })
-      token.save()
-      user.save()
       res.send({ user, token })
     } catch (error) {
       throw error
