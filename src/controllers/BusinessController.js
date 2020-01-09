@@ -1,5 +1,5 @@
 import { Business, Employee, Appointment } from '../database/Schema'
-import { InsertModel } from './mutations'
+import * as mutations from './mutations'
 
 class BusinessController {
   showBusinesses = async (req, res) => {
@@ -41,8 +41,8 @@ class BusinessController {
 
   addEmployeesToBusiness = async (req, res) => {
     try {
-      const employeeIds = await req.body.employees.map(employee => {
-        const InsertedEmployee = InsertModel(Employee, {
+      const employeeIds = req.body.employees.map(employee => {
+        const InsertedEmployee = mutations.InsertModel(Employee, {
           ...employee,
           business_id: req.params.business_id
         })
