@@ -1,4 +1,5 @@
-import { Business, Employee } from '../database/Schema'
+import { Business, Employee, Appointment } from '../database/Schema'
+import { InsertModel } from './mutations'
 
 class BusinessController {
   showBusinesses = async (req, res) => {
@@ -41,11 +42,10 @@ class BusinessController {
   addEmployeesToBusiness = async (req, res) => {
     try {
       const employeeIds = await req.body.employees.map(employee => {
-        const InsertedEmployee = new Employee({
+        const InsertedEmployee = InsertModel(Employee, {
           ...employee,
           business_id: req.params.business_id
         })
-        InsertedEmployee.save()
         return InsertedEmployee._id
       })
       await Business.findByIdAndUpdate(
@@ -74,11 +74,16 @@ class BusinessController {
     }
   }
 
-  destroy = async (req, res) => {
+  RemoveBusinessAndEmployees = async (req, res) => {
     try {
-      /*
-      Insert Queries Here
-      */
+      await Business.findByIdAndDelete(req.params.business_id)
+      await Employee.findOneAndDelete(
+        { business_id: req.params.business_id },
+        async (err, doc) => {
+          await Appointment.deleteMany({ service_provider: doc._id })
+        }
+      )
+      res.send({ message: 'Closed Business' })
     } catch (error) {
       throw error
     }
