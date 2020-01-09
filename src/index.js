@@ -14,7 +14,7 @@ class App {
     this.database = new Database()
   }
   get() {
-    this.app.get(this.baseRoute, (req, res) => res.json({ mdg: 'Portfolio' }))
+    this.app.get(this.baseRoute, (req, res) => res.json({ msg: 'Portfolio' }))
   }
 
   listen() {

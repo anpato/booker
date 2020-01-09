@@ -1,11 +1,13 @@
 import { SALT_ROUNDS, APP_SECRET } from '../env'
 import bcrypt from 'bcrypt'
 import jsonwebtoken from 'jsonwebtoken'
+import uuidV4 from 'uuid/v4'
 
-import { User } from '../database/Schema'
+import { User, VerifcationToken } from '../database/Schema'
 export default class AuthController {
   constructor() {
     this.jwt = jsonwebtoken
+    this.uuid = uuidV4
   }
   Authenticate = async (req, res, next) => {
     try {
@@ -42,9 +44,11 @@ export default class AuthController {
     }
   }
 
-  VerifyUserAccount = async (req, res) => {
+  VerifyUserAccount = async (req, res, next) => {
     try {
-      await User.findOneAndUpdate()
+      const { _id } = res.locals.token.user_id
+      await User.updateOne({ _id }, { isVerified: true })
+      next()
     } catch (error) {
       throw error
     }
@@ -61,8 +65,14 @@ export default class AuthController {
         password_digest,
         isVerified: false
       })
+      const token = new VerifcationToken({
+        token: this.uuid(),
+        user_id: user._id,
+        expire_at: Date.now()
+      })
+      token.save()
       user.save()
-      res.send(user)
+      res.send({ user, token })
     } catch (error) {
       throw error
     }
