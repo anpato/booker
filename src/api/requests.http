@@ -1,0 +1,42 @@
+@hostname = localhost
+@port = 3001
+@baseurl = http://{{hostname}}:{{port}}/api
+@contentType = application/json
+
+### GET BUSINESSES
+
+# GET * BUSINESSES
+GET {{baseurl}}/businesses
+###
+
+# GET BUSINESS BY ID
+
+@id = 5e17d52abefd53d9697375d5
+
+GET {{baseurl}}/businesses/{{id}}
+
+### POST BUSINESS
+
+POST  {{baseurl}}/businesses
+Content-Type: {{contentType}}
+
+{
+  "business":{
+    "name": "New Cutzz",
+    "address": {
+      "address_line": "1234 Wallaby way",
+      "zip_code": "123456",
+      "city": "Union",
+      "state": "NJ",
+      "cc": "US"
+    },
+    "hours": [
+      {
+        "day": "Monday",        
+        "open_time": "9:00 AM",
+        "close_time": "5:00 PM"
+      }
+    ],
+    "phone_number": "123-123-1234"
+}
+}

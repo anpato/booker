@@ -70,7 +70,7 @@ class BusinessController {
       business.save()
       res.send(business)
     } catch (error) {
-      throw error
+      // throw error
     }
   }
 

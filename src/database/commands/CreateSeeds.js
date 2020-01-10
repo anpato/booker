@@ -1,6 +1,8 @@
 import faker from 'faker'
 import fs from 'fs'
 import chalk from 'chalk'
+import TestEmployees from '../data/TestEmployees'
+import TestBusiness from '../data/TestBusiness'
 
 const createTimes = () => {
   let times = []
@@ -18,7 +20,7 @@ const createTimes = () => {
 }
 
 const createBusinesses = lenOfItems => {
-  const businesses = []
+  const businesses = [TestBusiness]
   for (let i = 0; i < lenOfItems; i++) {
     const business = {
       name: faker.company.companyName(),
@@ -39,7 +41,7 @@ const createBusinesses = lenOfItems => {
 }
 
 const createEmployee = lenOfItems => {
-  let employees = []
+  let employees = [...TestEmployees]
 
   for (let index = 0; index < lenOfItems; index++) {
     const employee = {
