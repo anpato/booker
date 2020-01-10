@@ -4,7 +4,7 @@ import jsonwebtoken from 'jsonwebtoken'
 import uuidV4 from 'uuid/v4'
 import * as mutations from './mutations'
 import { User, VerifcationToken } from '../database/Schema'
-import { ErrorHandler } from '../middleware/error/ErrorHandler'
+import { ErrorHandler } from '../middleware/error'
 export default class AuthController {
   constructor() {
     this.jwt = jsonwebtoken
@@ -51,7 +51,7 @@ export default class AuthController {
       await User.updateOne({ _id }, { isVerified: true })
       next()
     } catch (error) {
-      throw error
+      next(new ErrorHandler(401, 'Account Not Found'))
     }
   }
 
@@ -77,7 +77,7 @@ export default class AuthController {
     }
   }
 
-  LoginUser = async (req, res) => {
+  LoginUser = async (req, res, next) => {
     try {
       const { username, password } = res.locals.user
       const user = await User.findOne({ username })
@@ -90,7 +90,7 @@ export default class AuthController {
         const token = this.SignToken(payload)
         return res.send({ user: payload, token })
       }
-      return res.status(401).json({ message: 'Unauthorized' })
+      next(new ErrorHandler(401, 'Unauthorized'))
     } catch (error) {
       throw error
     }

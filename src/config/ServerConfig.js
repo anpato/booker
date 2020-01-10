@@ -2,7 +2,7 @@ import bodyParser from 'body-parser'
 import helmet from 'helmet'
 import logger from 'morgan'
 import cors from 'cors'
-import { ErrorHandler } from '../middleware/error/ErrorHandler'
+import { ErrorHandler } from '../middleware/error'
 
 export default [
   helmet(),

@@ -1,4 +1,6 @@
-export const VerifyIsUserValid = (req, res, next) =>
-  res.locals.user.isVerified
-    ? next()
-    : res.status(401).json({ message: 'You must validate your account' })
+import { ErrorHandler } from '../error'
+
+export const VerifyIsUserValid = (err, req, res, next) => {
+  err = new ErrorHandler(401, 'Account Not Found')
+  return res.locals.user && res.locals.user.isVerified ? next() : next(err)
+}
