@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt'
 import jsonwebtoken from 'jsonwebtoken'
 import uuidV4 from 'uuid/v4'
 import * as mutations from './mutations'
-
 import { User, VerifcationToken } from '../database/Schema'
 import { ErrorHandler } from '../middleware/error/ErrorHandler'
 export default class AuthController {
@@ -11,7 +10,7 @@ export default class AuthController {
     this.jwt = jsonwebtoken
     this.uuid = uuidV4
   }
-  Authenticate = async (req, res, next) => {
+  Authenticate = (req, res, next) => {
     try {
       const token = req.headers.authorization.split(' ')[1]
       const data = this.jwt.verify(token, APP_SECRET)

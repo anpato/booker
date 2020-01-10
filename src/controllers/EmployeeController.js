@@ -1,28 +1,35 @@
 import { Employee, User, Appointment } from '../database/Schema'
-
+import * as mutations from './mutations'
 class EmployeeController {
-  AddAppointmentSlotToEmployee = async (req, res) => {
+  AddAppointmentSlotToEmployee = (req, res) => {
     try {
       const { slot, day } = req.body.appointment
       const { user, employee } = res.locals
 
-      const appointment = new Appointment({
+      const appointment = mutations.InsertModel(Appointment, {
         slot,
         day: new Date(day),
         user: user._id,
         service_provider: employee._id,
         isCanceled: false
       })
-      appointment.save()
       res.send(appointment)
     } catch (error) {
       throw error
     }
   }
 
-  UpdateAppointment = (req, res) => {
+  UpdateAppointment = async (req, res) => {
     try {
-      // await Appointment.findOneAndUpdate({})
+      await Appointment.findOneAndUpdate(
+        { service_provider: req.params.employee_id },
+        { ...req.body.appointment },
+        { new: true },
+        (err, doc) => {
+          if (err) throw err
+          res.send(doc)
+        }
+      )
     } catch (error) {
       throw error
     }

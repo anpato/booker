@@ -17,4 +17,9 @@ EmployeeRouter.post(
   controller.AddAppointmentSlotToEmployee
 )
 
+EmployeeRouter.put(
+  '/:employee_id/appointment',
+  resolvers.FindEmployeeAndAppointment,
+  controller.UpdateAppointment
+)
 export default EmployeeRouter
