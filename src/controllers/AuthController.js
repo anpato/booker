@@ -5,6 +5,7 @@ import uuidV4 from 'uuid/v4'
 import * as mutations from './mutations'
 
 import { User, VerifcationToken } from '../database/Schema'
+import { ErrorHandler } from '../middleware/error/ErrorHandler'
 export default class AuthController {
   constructor() {
     this.jwt = jsonwebtoken
@@ -73,7 +74,7 @@ export default class AuthController {
       })
       res.send({ user, token })
     } catch (error) {
-      throw error
+      throw new ErrorHandler(404, 'Message')
     }
   }
 
