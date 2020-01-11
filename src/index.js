@@ -24,7 +24,7 @@ class App {
   }
 
   init_middleWare() {
-    this.middleWare.forEach(tool => this.app.use(tool))
+    this.middleWare.forEach(middleware => this.app.use(middleware))
   }
   init_routes() {
     this.app.use('/api', Router)

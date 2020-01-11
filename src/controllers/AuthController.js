@@ -29,20 +29,12 @@ export default class AuthController {
     return token
   }
 
-  VerifyPassword = async (user, password, res) => {
-    try {
-      return await bcrypt.compare(password, user.password_digest)
-    } catch (error) {
-      res.status(500).json({ error: error.message })
-    }
+  VerifyPassword = async (user, password) => {
+    return await bcrypt.compare(password, user.password_digest)
   }
 
-  HashPassword = async (password, res) => {
-    try {
-      return await bcrypt.hash(password, SALT_ROUNDS)
-    } catch (error) {
-      res.status(500).json({ error: error.message })
-    }
+  HashPassword = async password => {
+    return await bcrypt.hash(password, SALT_ROUNDS)
   }
 
   VerifyUserAccount = async (req, res, next) => {
@@ -55,10 +47,10 @@ export default class AuthController {
     }
   }
 
-  RegisterUser = async (req, res) => {
+  RegisterUser = async (req, res, next) => {
     try {
-      const { username, name, email, password } = res.locals.user
-      const password_digest = await this.HashPassword(password, res)
+      const { username, name, email, password } = req.body
+      const password_digest = await this.HashPassword(password)
       const user = mutations.InsertModel(User, {
         name,
         username,
@@ -73,15 +65,14 @@ export default class AuthController {
       })
       res.send({ user, token })
     } catch (error) {
-      throw new ErrorHandler(404, 'Message')
+      next(new ErrorHandler(500, 'Could not register account'))
     }
   }
 
   LoginUser = async (req, res, next) => {
     try {
-      const { username, password } = res.locals.user
-      const user = await User.findOne({ username })
-      if (user && (await this.VerifyPassword(user, password, res))) {
+      const { user, password } = res.locals
+      if (await this.VerifyPassword(user, password)) {
         const payload = {
           _id: user._id,
           username: user.username,

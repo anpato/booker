@@ -8,9 +8,11 @@ GET {{baseurl}}/businesses
 
 
 ### GET BUSINESS BY ID
+
 GET {{baseurl}}/businesses/{{business_id}}
 
 ### POST BUSINESS
+
 POST  {{baseurl}}/businesses
 Content-Type: {{contentType}}
 
@@ -118,4 +120,36 @@ Content-Type: {{contentType}}
 }
 
 ### DELETE BUSINESS
-DELETE {{baseurl}}/businesses/{{business_id}}
+# DELETE {{baseurl}}/businesses/{{business_id}}
+
+
+###### Authentication Requests
+
+### AUTH REGISTER
+
+POST {{baseurl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "name": "Tester Account",
+  "username": "TestAccount",
+  "email":"testaccount@mail.com",
+  "password": "testaccount"
+}
+
+### AUTH VERIFY ACCOUNT
+# Take user id and token id from above request
+@userId = 5e1a2759d84e2911afc090f1
+@tokenId=5e1a2759d84e2911afc090f2
+PUT {{baseurl}}/auth/verify/user/{{userId}}/token/{{tokenId}}
+
+### AUTH LOGIN 
+# This request will should not pass without verifying account
+
+POST {{baseurl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "username": "TestAccount",
+  "password": "testaccount"
+}
