@@ -2,21 +2,15 @@
 @port = 3001
 @baseurl = http://{{hostname}}:{{port}}/api
 @contentType = application/json
-
-### GET BUSINESSES
-
-# GET * BUSINESSES
-GET {{baseurl}}/businesses
-###
-
-# GET BUSINESS BY ID
-
 @business_id = 5e17d52abefd53d9697375d5
+### GET BUSINESSES
+GET {{baseurl}}/businesses
 
+
+### GET BUSINESS BY ID
 GET {{baseurl}}/businesses/{{business_id}}
 
 ### POST BUSINESS
-
 POST  {{baseurl}}/businesses
 Content-Type: {{contentType}}
 
@@ -40,3 +34,88 @@ Content-Type: {{contentType}}
     "phone_number": "123-123-1234"
 }
 }
+
+
+### PUT BUSINESS
+PUT {{baseurl}}/businesses/{{business_id}}/details
+Content-Type: {{contentType}}
+
+{
+   "business":{
+    "name": "New Cutzz",
+    "address": {
+      "address_line": "1234 Wallaby way",
+      "zip_code": "123456",
+      "city": "Union",
+      "state": "NJ",
+      "cc": "US"
+    },
+    "phone_number": "123-123-1234",
+    "hours": [
+      {
+        "day": "Monday",        
+        "open_time": "9:30 AM",
+        "close_time": "5:00 PM"
+      },
+      {
+        "day": "Tuesday",        
+        "open_time": "9:30 AM",
+        "close_time": "5:30 PM"
+      },
+      {
+        "day": "Thursday",        
+        "open_time": "9:00 AM",
+        "close_time": "6:00 PM"
+      }
+    ]
+}
+}
+
+### PUT BUSINESS ADD EMPLOYEES
+
+PUT {{baseurl}}/businesses/{{business_id}}/employees
+Content-Type: {{contentType}}
+
+{
+  "employees": [
+      {
+    "_id": "5e190adc92477d5902490532",
+    "name": "Sage Rippin",
+    "profile_img":
+      "https://s3.amazonaws.com/uifaces/faces/twitter/adamnac/128.jpg",
+    "email": "Bonnie83@yahoo.com",
+    "business_id": "5e17d52abefd53d9697375d5",
+    "isAdmin": true
+  },
+  {
+    "_id": "5e190af15f2306f25ccc3dcf",
+    "name": "Ivory Mitchell",
+    "profile_img":
+      "https://s3.amazonaws.com/uifaces/faces/twitter/madysondesigns/128.jpg",
+    "email": "Rachael35@hotmail.com",
+    "business_id": "5e17d52abefd53d9697375d5",
+    "isAdmin": false
+  },
+  {
+    "_id": "5e190afb3e57e9a30a5bab62",
+    "name": "Giles Johnson",
+    "profile_img":
+      "https://s3.amazonaws.com/uifaces/faces/twitter/alagoon/128.jpg",
+    "email": "Eino.OKeefe72@hotmail.com",
+    "business_id": "5e17d52abefd53d9697375d5",
+    "isAdmin": false
+  },
+  {
+    "_id": "5e190b02e5772f475367dda5",
+    "name": "Miss Minerva Mante",
+    "profile_img":
+      "https://s3.amazonaws.com/uifaces/faces/twitter/leehambley/128.jpg",
+    "email": "Henriette_Parisian@hotmail.com",
+    "business_id": "5e17d52abefd53d9697375d5",
+    "isAdmin": false
+  }
+  ]
+}
+
+### DELETE BUSINESS
+DELETE {{baseurl}}/businesses/{{business_id}}
