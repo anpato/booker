@@ -11,9 +11,9 @@ GET {{baseurl}}/businesses
 
 # GET BUSINESS BY ID
 
-@id = 5e17d52abefd53d9697375d5
+@business_id = 5e17d52abefd53d9697375d5
 
-GET {{baseurl}}/businesses/{{id}}
+GET {{baseurl}}/businesses/{{business_id}}
 
 ### POST BUSINESS
 

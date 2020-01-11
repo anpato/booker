@@ -9,7 +9,7 @@ const run = async () => {
   try {
     await main()
   } catch (error) {
-    throw erro
+    throw error
   }
 }
 

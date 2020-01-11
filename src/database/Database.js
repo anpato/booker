@@ -4,9 +4,9 @@ import { db } from '../config'
 import chalk from 'chalk'
 
 class Database {
-  constructor() {
-    this.employees = []
-    this.businesses = []
+  constructor(employees, businesses) {
+    this.employees = employees
+    this.businesses = businesses
     this.counter = 0
     this.db = db
     this.connect = connect
@@ -46,6 +46,7 @@ class Database {
 
   AddBusinessIdToEmployee = async (employees, businesses) => {
     let counter = 0
+    console.info(chalk.green('Creating Associations'))
     try {
       await employees.forEach(async (employee, index) => {
         await Employee.findOneAndUpdate(
@@ -67,6 +68,15 @@ class Database {
     }
   }
 
+  InsertTestSeed = (employees, businesses) => {
+    employees.forEach(employee => {
+      new Employee(employee).save()
+    })
+    businesses.forEach(business => {
+      new Business(business).save()
+    })
+  }
+
   AddEmployeeIdToBusiness = async employee => {
     try {
       await Business.findOneAndUpdate(
@@ -81,9 +91,9 @@ class Database {
   InsertEmployeeAndBusinessMutation = async () => {
     try {
       await this.ConnectDB()
-      this.employees = await Employee.find()
-      this.businesses = await Business.find()
-      console.info(chalk.green('Creating Associations'))
+      await Employee.insertMany(this.employees)
+      await Business.insertMany(this.businesses)
+      console.info(chalk.green('Inserting JSON Files'))
       await this.AddBusinessIdToEmployee(this.employees, this.businesses)
     } catch (error) {
       throw error

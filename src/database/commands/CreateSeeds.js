@@ -1,8 +1,6 @@
 import faker from 'faker'
 import fs from 'fs'
 import chalk from 'chalk'
-import TestEmployees from '../data/TestEmployees'
-import TestBusiness from '../data/TestBusiness'
 
 const createTimes = () => {
   let times = []
@@ -20,7 +18,7 @@ const createTimes = () => {
 }
 
 const createBusinesses = lenOfItems => {
-  const businesses = [TestBusiness]
+  const businesses = []
   for (let i = 0; i < lenOfItems; i++) {
     const business = {
       name: faker.company.companyName(),
@@ -41,7 +39,7 @@ const createBusinesses = lenOfItems => {
 }
 
 const createEmployee = lenOfItems => {
-  let employees = [...TestEmployees]
+  let employees = []
 
   for (let index = 0; index < lenOfItems; index++) {
     const employee = {
@@ -56,7 +54,7 @@ const createEmployee = lenOfItems => {
   writeToJSONFile('Employees', JSON.stringify(employees, null, 2))
 }
 
-const createUsers = lenOfItems => {
+const createUsers = async lenOfItems => {
   let users = []
   for (let index = 0; index < lenOfItems; index++) {
     const user = {
@@ -79,10 +77,10 @@ const writeToJSONFile = (filename, data) =>
     }
   )
 
-export const CreateSeedFiles = () => {
+export const CreateSeedFiles = async () => {
   console.info(chalk.greenBright('Generating Seed Data'))
   const lenOfItems = 400
-  createBusinesses(lenOfItems)
-  createEmployee(lenOfItems)
-  createUsers(lenOfItems)
+  await createBusinesses(lenOfItems)
+  await createEmployee(lenOfItems)
+  await createUsers(lenOfItems)
 }
