@@ -139,6 +139,8 @@ Content-Type: {{contentType}}
 
 ### AUTH VERIFY ACCOUNT
 # Take user id and token id from above request
+
+# These will change
 @userId = 5e1a2759d84e2911afc090f1
 @tokenId=5e1a2759d84e2911afc090f2
 PUT {{baseurl}}/auth/verify/user/{{userId}}/token/{{tokenId}}

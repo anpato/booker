@@ -6,15 +6,15 @@ import Database from './database/Database'
 import chalk from 'chalk'
 
 class App {
-  constructor(port, middleWare, baseRoute) {
+  constructor(port, middleWare, baseroute) {
     this.app = express()
     this.port = port
     this.middleWare = middleWare
-    this.baseRoute = baseRoute
+    this.baseroute = baseroute
     this.database = new Database()
   }
   get() {
-    this.app.get(this.baseRoute, (req, res) => res.json({ msg: 'Portfolio' }))
+    this.app.get(this.baseroute, (req, res) => res.json({ msg: 'Portfolio' }))
   }
 
   listen() {
