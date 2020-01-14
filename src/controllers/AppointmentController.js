@@ -4,7 +4,7 @@ class AppointmentController {
   FindAllAppointments = async (req, res) => {
     try {
       const appointments = await Appointment.find({
-        service_provider: req.params.provider_id
+        employee_id: req.params.employee_id
       })
       res.send(appointments)
     } catch (error) {
@@ -16,7 +16,7 @@ class AppointmentController {
     try {
       const activeAppointments = await Appointment.find().where({
         isCanceled: false,
-        service_provider: req.query.provider
+        employee_id: req.query.employee
       })
       res.send(activeAppointments)
     } catch (error) {

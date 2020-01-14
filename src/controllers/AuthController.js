@@ -22,10 +22,7 @@ export default class AuthController {
   }
 
   SignToken = payload => {
-    const token = this.jwt.sign(
-      { payload, exp: Math.floor(new Date().getTime() / 1000) + 42 * 7200 },
-      APP_SECRET
-    )
+    const token = this.jwt.sign({ payload }, APP_SECRET)
     return token
   }
 

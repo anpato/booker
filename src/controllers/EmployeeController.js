@@ -10,7 +10,7 @@ class EmployeeController {
         slot,
         day: new Date(day),
         user: user._id,
-        service_provider: employee._id,
+        employee_id: employee._id,
         isCanceled: false
       })
       res.send(appointment)
@@ -22,7 +22,7 @@ class EmployeeController {
   UpdateAppointment = async (req, res) => {
     try {
       await Appointment.findOneAndUpdate(
-        { service_provider: req.params.employee_id },
+        { employee_id: req.params.employee_id },
         { ...req.body.appointment },
         { new: true },
         (err, doc) => {

@@ -3,7 +3,7 @@ import { Schema } from 'mongoose'
 const AppointmentSchema = new Schema(
   {
     slot: String,
-    service_provider: {
+    employee_id: {
       type: Schema.Types.ObjectId,
       ref: 'employees'
     },
