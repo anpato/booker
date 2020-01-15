@@ -2,7 +2,7 @@ import express from 'express'
 import Router from './routes'
 import Database from './database/Database'
 import chalk from 'chalk'
-import { HandleError } from './middleware/error'
+import { HandleError, ErrorHandler } from './middleware/error'
 
 class Server {
   constructor(port, middleWare, baseroute) {
@@ -33,14 +33,16 @@ class Server {
       this.listen()
     })
   }
-  init_errorHandler() {
+  init_errorHandlers() {
     this.app.use(HandleError)
   }
   initialize() {
     this.app.disable('x-powered-by')
     this.init_middleWare()
     this.init_routes()
+
     this.connectDB()
+    this.init_errorHandlers()
   }
 }
 

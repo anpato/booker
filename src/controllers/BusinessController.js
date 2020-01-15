@@ -1,9 +1,10 @@
 import { Business, Employee, Appointment } from '../database/Schema'
 import * as mutations from '../utils/mutations'
 import * as resolvers from '../utils/resolvers'
+import { ErrorHandler } from '../middleware/error'
 
 class BusinessController {
-  showBusinesses = async (req, res) => {
+  showBusinesses = async (req, res, next) => {
     try {
       const resPerPage = 10
       const page = req.query.page || 1
@@ -19,7 +20,7 @@ class BusinessController {
         res
       )
     } catch (error) {
-      throw error
+      next(error)
     }
   }
 
@@ -35,23 +36,23 @@ class BusinessController {
     }
   }
 
-  updateBusiness = async (req, res) => {
+  updateBusiness = async (req, res, next) => {
     try {
       await Business.findByIdAndUpdate(
         req.params.business_id,
         req.body.business,
         { new: true },
         (err, doc) => {
-          if (err) throw err
+          if (err) next(new ErrorHandler(500, 'Mongo Error'))
           res.send(doc)
         }
       )
     } catch (error) {
-      throw error
+      next(new ErrorHandler(500, 'Server Error'))
     }
   }
 
-  addEmployeesToBusiness = async (req, res) => {
+  addEmployeesToBusiness = async (req, res, next) => {
     try {
       const employeeIds = req.body.employees.map(employee => {
         const InsertedEmployee = mutations.InsertModel(Employee, {
@@ -72,7 +73,7 @@ class BusinessController {
         }
       )
     } catch (error) {
-      throw error
+      next(new ErrorHandler(500, 'Server Error'))
     }
   }
 

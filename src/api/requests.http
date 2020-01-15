@@ -41,7 +41,7 @@ Content-Type: {{contentType}}
 
 
 ### PUT BUSINESS
-PUT {{baseurl}}/businesses/{{business_id}}/details
+PUT {{baseurl}}/businesses/1234/details
 Content-Type: {{contentType}}
 
 {
