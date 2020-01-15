@@ -9,6 +9,5 @@ export default [
   logger('dev'),
   cors(),
   bodyParser.urlencoded({ extended: true }),
-  bodyParser.json(),
-  (err, req, res, next) => HandleError(err, res)
+  bodyParser.json()
 ]

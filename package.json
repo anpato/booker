@@ -10,7 +10,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --exec babel-node ./src",
+    "dev": "nodemon --exec babel-node ./src/App.js",
     "db:seed": " babel-node ./src/database/commands/SeedDatabase.js ",
     "db:drop": "babel-node ./src/database/commands/DropDatabase.js",
     "db:reset": "yarn db:drop && yarn db:seed",

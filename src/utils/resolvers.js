@@ -85,3 +85,12 @@ export const RemoveVerificationToken = async (req, res) => {
   await VerifcationToken.deleteOne({ _id: res.locals.token._id })
   res.send({ message: 'Account Verified' })
 }
+
+export const ReturnPaginatedResults = (countData, key, data, res) => {
+  res.json({
+    currentPage: countData.currentPage,
+    pages: Math.ceil(countData.results / countData.limit),
+    results: countData.results,
+    [key]: data
+  })
+}

@@ -4,7 +4,9 @@
 @contentType = application/json
 @business_id = 5e17d52abefd53d9697375d5
 ### GET BUSINESSES
-GET {{baseurl}}/businesses
+
+#  Can be formated as query like so: businesses/?page=1
+GET {{baseurl}}/businesses/?page=10
 
 
 ### GET BUSINESS BY ID

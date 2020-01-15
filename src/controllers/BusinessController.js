@@ -1,11 +1,23 @@
 import { Business, Employee, Appointment } from '../database/Schema'
 import * as mutations from '../utils/mutations'
+import * as resolvers from '../utils/resolvers'
 
 class BusinessController {
   showBusinesses = async (req, res) => {
     try {
+      const resPerPage = 10
+      const page = req.query.page || 1
       const businesses = await Business.find()
-      res.send(businesses)
+        .populate('address')
+        .skip(resPerPage * page - resPerPage)
+        .limit(resPerPage)
+      const numOfEntrys = await Business.countDocuments()
+      resolvers.ReturnPaginatedResults(
+        { currentPage: page, limit: resPerPage, results: numOfEntrys },
+        'businesses',
+        businesses,
+        res
+      )
     } catch (error) {
       throw error
     }

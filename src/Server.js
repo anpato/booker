@@ -1,11 +1,10 @@
 import express from 'express'
-import middleWare from './config/ServerConfig'
 import Router from './routes'
-import { PORT } from './env'
 import Database from './database/Database'
 import chalk from 'chalk'
+import { HandleError } from './middleware/error'
 
-class App {
+class Server {
   constructor(port, middleWare, baseroute) {
     this.app = express()
     this.port = port
@@ -34,6 +33,9 @@ class App {
       this.listen()
     })
   }
+  init_errorHandler() {
+    this.app.use(HandleError)
+  }
   initialize() {
     this.app.disable('x-powered-by')
     this.init_middleWare()
@@ -42,6 +44,4 @@ class App {
   }
 }
 
-const app = new App(PORT, middleWare, '/')
-
-app.initialize()
+export default Server
