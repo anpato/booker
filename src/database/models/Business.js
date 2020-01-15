@@ -1,13 +1,11 @@
 import { Schema } from 'mongoose'
-const BusinessSchema = new Schema(
+
+const BusinessModel = new Schema(
   {
     name: String,
     address: {
-      address_line: String,
-      zip_code: String,
-      city: String,
-      state: String,
-      cc: String
+      type: Schema.Types.ObjectId,
+      ref: 'addresses'
     },
     hours: [
       {
@@ -31,4 +29,4 @@ const BusinessSchema = new Schema(
   }
 )
 
-export { BusinessSchema }
+export { BusinessModel }

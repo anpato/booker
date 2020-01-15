@@ -120,7 +120,7 @@ Content-Type: {{contentType}}
 }
 
 ### DELETE BUSINESS
-# DELETE {{baseurl}}/businesses/{{business_id}}
+DELETE {{baseurl}}/businesses/{{business_id}}
 
 
 ###### Authentication Requests
@@ -141,8 +141,8 @@ Content-Type: {{contentType}}
 # Take user id and token id from above request
 
 # These will change
-@userId = 5e1a2759d84e2911afc090f1
-@tokenId=5e1a2759d84e2911afc090f2
+@userId = 5e1e4c2ad339981ea3ac040b
+@tokenId=5e1e4c2ad339981ea3ac040c
 PUT {{baseurl}}/auth/verify/user/{{userId}}/token/{{tokenId}}
 
 ### AUTH LOGIN 

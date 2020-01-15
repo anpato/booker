@@ -1,6 +1,7 @@
 import faker from 'faker'
 import fs from 'fs'
 import chalk from 'chalk'
+import { Types } from 'mongoose'
 
 const createTimes = () => {
   let times = []
@@ -17,25 +18,38 @@ const createTimes = () => {
   return times
 }
 
+const createAddress = () => {
+  const addressData = {
+    _id: Types.ObjectId(),
+    address_line: faker.address.streetAddress(),
+    zip_code: faker.address.zipCode(),
+    city: faker.address.city(),
+    state: faker.address.city(),
+    cc: faker.address.countryCode(),
+    lat: faker.address.latitude(),
+    lng: faker.address.longitude()
+  }
+
+  return { _id: addressData._id, data: addressData }
+}
+
 const createBusinesses = lenOfItems => {
   const businesses = []
+  const addresses = []
   for (let i = 0; i < lenOfItems; i++) {
+    const address = createAddress()
     const business = {
       name: faker.company.companyName(),
-      address: {
-        address_line: faker.address.streetAddress(),
-        zip_code: faker.address.zipCode(),
-        city: faker.address.city(),
-        state: faker.address.city(),
-        cc: faker.address.countryCode()
-      },
+      address: address._id,
       hours: createTimes(),
       employees: [],
       phone_number: faker.phone.phoneNumber()
     }
     businesses.push(business)
+    addresses.push(address.data)
   }
   writeToJSONFile('Businesses', JSON.stringify(businesses, null, 2))
+  writeToJSONFile('Addresses', JSON.stringify(addresses, null, 2))
 }
 
 const createEmployee = lenOfItems => {

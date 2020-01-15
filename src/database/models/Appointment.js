@@ -1,6 +1,6 @@
 import { Schema } from 'mongoose'
 
-const AppointmentSchema = new Schema(
+const AppointmentModel = new Schema(
   {
     slot: String,
     employee_id: {
@@ -19,4 +19,4 @@ const AppointmentSchema = new Schema(
   }
 )
 
-export { AppointmentSchema }
+export { AppointmentModel }

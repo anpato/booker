@@ -1,6 +1,6 @@
 import { Schema } from 'mongoose'
 
-const UserSchema = new Schema(
+const UserModel = new Schema(
   {
     name: String,
     username: String,
@@ -13,4 +13,4 @@ const UserSchema = new Schema(
   }
 )
 
-export { UserSchema }
+export { UserModel }

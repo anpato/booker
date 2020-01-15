@@ -66,8 +66,7 @@ class BusinessController {
 
   createNewBusiness = async (req, res) => {
     try {
-      const business = new Business(req.body.business)
-      business.save()
+      const business = mutations.InsertModel(Business, req.body.business)
       res.send(business)
     } catch (error) {
       // throw error
@@ -80,6 +79,7 @@ class BusinessController {
       await Employee.findOneAndDelete(
         { business_id: req.params.business_id },
         async (err, doc) => {
+          await Employee.deleteMany({ business_id: req.params, business_id })
           await Appointment.deleteMany({ service_provider: doc._id })
         }
       )

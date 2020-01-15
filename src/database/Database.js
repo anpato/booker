@@ -1,5 +1,6 @@
 import { Employee, Business } from './Schema'
 import { Types, connection, connect } from 'mongoose'
+import * as mutations from '../controllers/mutations/InsertModel'
 import { db } from '../config'
 import chalk from 'chalk'
 
@@ -70,10 +71,10 @@ class Database {
 
   InsertTestSeed = (employees, businesses) => {
     employees.forEach(employee => {
-      new Employee(employee).save()
+      mutations.InsertModel(Employee, employee)
     })
     businesses.forEach(business => {
-      new Business(business).save()
+      mutations.InsertModel(Business, business)
     })
   }
 

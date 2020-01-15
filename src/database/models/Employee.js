@@ -1,5 +1,6 @@
 import { Schema } from 'mongoose'
-const EmployeeSchema = new Schema(
+
+const EmployeeModel = new Schema(
   {
     name: String,
     profile_img: String,
@@ -15,4 +16,4 @@ const EmployeeSchema = new Schema(
   }
 )
 
-export { EmployeeSchema }
+export { EmployeeModel }

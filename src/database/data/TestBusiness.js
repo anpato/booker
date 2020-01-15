@@ -10,12 +10,7 @@ export default [
       state: 'NJ',
       cc: 'US'
     },
-    employees: [
-      new Types.ObjectId('5e190adc92477d5902490532'),
-      new Types.ObjectId('5e190af15f2306f25ccc3dcf'),
-      new Types.ObjectId('5e190afb3e57e9a30a5bab62'),
-      new Types.ObjectId('5e190b02e5772f475367dda5')
-    ],
+    employees: [],
     hours: [
       {
         day: 'Monday',

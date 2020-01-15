@@ -1,5 +1,5 @@
 import Database from '../Database'
-import { readFile } from 'fs'
+import { readFile, read } from 'fs'
 import { CreateSeedFiles } from './CreateSeeds'
 import TestEmployees from '../data/TestEmployees'
 import TestBusiness from '../data/TestBusiness'
@@ -20,11 +20,18 @@ const main = async () => {
           __dirname + '/../data/Businesses.json',
           'utf8',
           (err, businesses) => {
-            const database = new Database(
-              JSON.parse(employees),
-              JSON.parse(businesses)
+            readFile(
+              __dirname + '/../data/Addresses.json',
+              'utf8',
+              (err, addresses) => {
+                const database = new Database(
+                  JSON.parse(employees),
+                  JSON.parse(businesses)
+                )
+                database.InsertEmployeeAndBusinessMutation()
+                // database.
+              }
             )
-            database.InsertEmployeeAndBusinessMutation()
           }
         )
       }

@@ -1,5 +1,6 @@
 import { Schema } from 'mongoose'
-const VerifcationTokenSchema = new Schema(
+
+const VerificationTokenModel = new Schema(
   {
     token: {
       type: String
@@ -19,4 +20,4 @@ const VerifcationTokenSchema = new Schema(
   }
 )
 
-export { VerifcationTokenSchema }
+export { VerificationTokenModel }
