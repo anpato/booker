@@ -93,7 +93,7 @@ const writeToJSONFile = (filename, data) =>
 
 export const CreateSeedFiles = async () => {
   console.info(chalk.greenBright('Generating Seed Data'))
-  const lenOfItems = 400
+  const lenOfItems = 4000
   await createBusinesses(lenOfItems)
   await createEmployee(lenOfItems)
   await createUsers(lenOfItems)

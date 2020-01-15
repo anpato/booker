@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import AuthController from '../controllers/AuthController'
 import * as validators from '../middleware/validators'
-import * as resolvers from '../controllers/resolvers'
+import * as resolvers from '../utils/resolvers'
 
 const AuthRouter = Router()
 const Auth = new AuthController()

@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import EmployeeController from '../controllers/EmployeeController'
 import * as validators from '../middleware/validators'
-import * as resolvers from '../controllers/resolvers'
+import * as resolvers from '../utils/resolvers'
 
 const EmployeeRouter = Router()
 const controller = new EmployeeController()

@@ -2,7 +2,7 @@ import { SALT_ROUNDS, APP_SECRET } from '../env'
 import bcrypt from 'bcrypt'
 import jsonwebtoken from 'jsonwebtoken'
 import uuidV4 from 'uuid/v4'
-import * as mutations from './mutations'
+import * as mutations from '../utils/mutations'
 import { User, VerifcationToken } from '../database/Schema'
 import { ErrorHandler } from '../middleware/error'
 export default class AuthController {

@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import AppointmentController from '../controllers/AppointmentController'
-import * as resolvers from '../controllers/resolvers'
+import * as resolvers from '../utils/resolvers'
 import * as validators from '../middleware/validators'
 
 const AppointmentRouter = Router()

@@ -1,5 +1,5 @@
 import { Employee, User, Appointment } from '../database/Schema'
-import * as mutations from './mutations'
+import * as mutations from '../utils/mutations'
 class EmployeeController {
   AddAppointmentSlotToEmployee = (req, res) => {
     try {

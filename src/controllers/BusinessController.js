@@ -1,5 +1,5 @@
 import { Business, Employee, Appointment } from '../database/Schema'
-import * as mutations from './mutations'
+import * as mutations from '../utils/mutations'
 
 class BusinessController {
   showBusinesses = async (req, res) => {

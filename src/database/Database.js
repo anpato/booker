@@ -1,14 +1,9 @@
-import { Employee, Business } from './Schema'
-import { Types, connection, connect } from 'mongoose'
-import * as mutations from '../controllers/mutations/InsertModel'
+import { connection, connect } from 'mongoose'
 import { db } from '../config'
 import chalk from 'chalk'
 
 class Database {
-  constructor(employees, businesses) {
-    this.employees = employees
-    this.businesses = businesses
-    this.counter = 0
+  constructor() {
     this.db = db
     this.connect = connect
     this.params = {
@@ -43,63 +38,6 @@ class Database {
       console.info(chalk.redBright('Database Dropped'))
       this.CloseConnection()
     })
-  }
-
-  AddBusinessIdToEmployee = async (employees, businesses) => {
-    let counter = 0
-    console.info(chalk.green('Creating Associations'))
-    try {
-      await employees.forEach(async (employee, index) => {
-        await Employee.findOneAndUpdate(
-          { _id: employee._id },
-          {
-            business_id: Types.ObjectId(businesses[index]._id)
-          },
-          { new: true },
-          async (err, doc) => {
-            await this.AddEmployeeIdToBusiness(doc, counter)
-            this.counter++
-            if (this.counter === this.employees.length)
-              return this.CloseConnection()
-          }
-        )
-      })
-    } catch (error) {
-      throw error
-    }
-  }
-
-  InsertTestSeed = (employees, businesses) => {
-    employees.forEach(employee => {
-      mutations.InsertModel(Employee, employee)
-    })
-    businesses.forEach(business => {
-      mutations.InsertModel(Business, business)
-    })
-  }
-
-  AddEmployeeIdToBusiness = async employee => {
-    try {
-      await Business.findOneAndUpdate(
-        { _id: employee.business_id },
-        { $set: { employees: employee._id } }
-      )
-    } catch (error) {
-    } finally {
-    }
-  }
-
-  InsertEmployeeAndBusinessMutation = async () => {
-    try {
-      await this.ConnectDB()
-      await Employee.insertMany(this.employees)
-      await Business.insertMany(this.businesses)
-      console.info(chalk.green('Inserting JSON Files'))
-      await this.AddBusinessIdToEmployee(this.employees, this.businesses)
-    } catch (error) {
-      throw error
-    } finally {
-    }
   }
 }
 
