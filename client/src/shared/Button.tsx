@@ -1,12 +1,7 @@
 import React from 'react'
 import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { GlobalStyles } from '../styles/GlobalStyle'
-interface ButtonProps {
-  onPress: any
-  title: string
-  style?: any
-  children?: any
-}
+import { ButtonProps } from '../utils/interfaces'
 
 export const Button = (props: ButtonProps) => {
   return (

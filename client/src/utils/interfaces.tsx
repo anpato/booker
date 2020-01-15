@@ -9,6 +9,13 @@ export interface SignInState {
   errorMessage: string
 }
 
+export interface ButtonProps {
+  onPress?: any
+  title?: string
+  style?: any
+  children?: any
+}
+
 export interface TextInputProps {
   onChangeText: any
   value: string
