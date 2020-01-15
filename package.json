@@ -13,12 +13,12 @@
     "dev": "nodemon --exec babel-node ./src/App.js",
     "db:seed": " babel-node ./src/database/commands/SeedDatabase.js ",
     "db:drop": "babel-node ./src/database/commands/DropDatabase.js",
-    "db:reset": "yarn db:drop && yarn db:seed",
+    "db:reset": "npm db:drop && npm db:seed",
     "heroku-postbuild": "yarn install",
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel -d ./build ./src -s ",
-    "build": "yarn clean && yarn build-babel",
-    "start": "yarn build && node ./build/App.js"
+    "build": "npm clean && npm build-babel",
+    "start": "npm build && node ./build/App.js"
   },
   "keywords": [],
   "author": "",
