@@ -13,15 +13,16 @@ import { Primary } from '../styles/Colors'
 
 export const Input = (props: TextInputProps) => {
   const [isFocused, setFocus] = useState(false)
-  const [animatedValue] = useState(new Animated.Value(1))
+  const [animatedValue] = useState(new Animated.Value(0))
 
   const handleBlur = () => {
-    Animated.timing(animatedValue, {
-      toValue: 0,
-      duration: 300,
-      useNativeDriver: true
-    }).start()
-    props.value.length ? setFocus(true) : setFocus(false)
+    !props.value.length
+      ? Animated.timing(animatedValue, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: true
+        }).start()
+      : setFocus(false)
   }
 
   const handleFocus = () => {
@@ -52,6 +53,7 @@ export const Input = (props: TextInputProps) => {
       <TextInput
         onFocus={handleFocus}
         onBlur={handleBlur}
+        placeholder={props.placeholder}
         autoCompleteType="off"
         secureTextEntry={
           props.label.toLowerCase() === 'password' ? true : false

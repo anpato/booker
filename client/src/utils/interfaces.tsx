@@ -28,12 +28,18 @@ export interface ButtonProps {
   error?: string
 }
 
+export interface CardProps {
+  style?: any[]
+  appointmentCount: number
+}
+
 export interface TextInputProps {
   onChangeText: any
   value: string
   label?: string
   isFocused?: boolean
   setFocus?: any
+  placeholder?: string
 }
 
 export interface FormProps {

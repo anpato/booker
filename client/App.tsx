@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react'
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
-import AuthStack from './src/routes/stacks/AuthStack'
 import { fetchFonts } from './src/utils/Fonts'
 import { AppLoading } from 'expo'
+
+import AuthStack from './src/routes/stacks/AuthStack'
 import Authenticate from './src/views/auth/Authenticate'
-import Main from './src/views/App/Main'
+import MainTabNavigator from './src/routes/tabs/MainTabNavigator'
+
 const AppContainer = createAppContainer(
   createSwitchNavigator({
     Authenticate: Authenticate,
     AuthStack: AuthStack,
-    App: Main
+    App: MainTabNavigator
   })
 )
 export default function App() {
@@ -23,12 +24,3 @@ export default function App() {
 
   return <AppContainer />
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-})
