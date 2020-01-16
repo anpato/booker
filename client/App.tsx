@@ -4,9 +4,13 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import AuthStack from './src/routes/stacks/AuthStack'
 import { fetchFonts } from './src/utils/Fonts'
 import { AppLoading } from 'expo'
+import Authenticate from './src/views/auth/Authenticate'
+import Main from './src/views/App/Main'
 const AppContainer = createAppContainer(
   createSwitchNavigator({
-    AuthStack: AuthStack
+    Authenticate: Authenticate,
+    AuthStack: AuthStack,
+    App: Main
   })
 )
 export default function App() {

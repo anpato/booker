@@ -11,7 +11,9 @@ export const Form = (props: FormProps) => {
           key={key}
           value={props.formData[key]}
           onChangeText={text => props.handleChange(text, key)}
+          isFocused={props.isFocused}
           label={key}
+          setFocus={props.setFocus}
         />
       )
     }

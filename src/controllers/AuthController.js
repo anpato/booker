@@ -63,6 +63,7 @@ export default class AuthController {
       res.send({ user, token })
     } catch (error) {
       next(new ErrorHandler(500, 'Could not register account'))
+      throw error
     }
   }
 

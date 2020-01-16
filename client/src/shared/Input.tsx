@@ -1,25 +1,67 @@
-import React, { useState } from 'react'
-import { View, TextInput, Text, StyleSheet, Keyboard } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import {
+  View,
+  TextInput,
+  Text,
+  StyleSheet,
+  Keyboard,
+  Animated
+} from 'react-native'
 import { TextInputProps } from '../utils/interfaces'
 import { upperCaser } from '../utils/mutations'
 import { Primary } from '../styles/Colors'
 
 export const Input = (props: TextInputProps) => {
   const [isFocused, setFocus] = useState(false)
+  const [animatedValue] = useState(new Animated.Value(1))
+
+  const handleBlur = () => {
+    Animated.timing(animatedValue, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: true
+    }).start()
+    props.value.length ? setFocus(true) : setFocus(false)
+  }
+
+  const handleFocus = () => {
+    Animated.timing(animatedValue, {
+      toValue: -30,
+      duration: 300,
+      useNativeDriver: true
+    }).start()
+    setFocus(true)
+  }
   return (
     <View style={styles.inputWrapper}>
-      <Text
+      <Animated.Text
         style={
-          isFocused ? [styles.label, styles.inputActiveLabel] : styles.label
+          props.value.length || isFocused
+            ? [
+                {
+                  ...styles.label,
+                  ...styles.inputActiveLabel,
+                  transform: [{ translateY: animatedValue }]
+                }
+              ]
+            : [styles.label, { transform: [{ translateY: animatedValue }] }]
         }
       >
         {upperCaser(props.label)}
-      </Text>
+      </Animated.Text>
       <TextInput
-        onFocus={() => setFocus(true)}
-        onBlur={() => setFocus(false)}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        autoCompleteType="off"
+        secureTextEntry={
+          props.label.toLowerCase() === 'password' ? true : false
+        }
         onEndEditing={Keyboard.dismiss}
-        style={isFocused ? [styles.input, styles.inputFocused] : styles.input}
+        style={
+          props.value.length || isFocused
+            ? [styles.input, styles.inputFocused]
+            : [styles.input]
+        }
         onChangeText={text =>
           props.onChangeText(text, props.label.toLowerCase())
         }
@@ -48,11 +90,10 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontFamily: 'OpenSans-Regular',
-    position: 'absolute'
+    position: 'absolute',
+    top: 10
   },
   inputActiveLabel: {
     color: Primary
-
-    // transform: [-10]
   }
 })
