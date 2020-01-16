@@ -33,15 +33,11 @@ class Server {
       this.listen()
     })
   }
-  init_errorHandlers() {
-    this.app.use(HandleError)
-  }
   initialize() {
     this.app.disable('x-powered-by')
     this.init_middleWare()
     this.init_routes()
     this.connectDB()
-    this.init_errorHandlers()
   }
 }
 
