@@ -5,6 +5,5 @@ npm-debug.log
 .env.local
 .vscode
 .DS_Store
-yarn.lock
 package-lock.json
 yarn-error.log
