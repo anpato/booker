@@ -1,22 +1,49 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, FlatList } from 'react-native'
 import { GlobalStyles } from '../../../styles/GlobalStyle'
 import { Card } from '../../../shared'
 import { Primary, Danger } from '../../../styles/Colors'
 
 export default class Home extends Component {
+  state = {
+    appointments: [
+      {
+        id: 1,
+        location: 'Beexa',
+        date: new Date().toLocaleDateString(),
+        time: `${new Date()
+          .getHours()
+          .toLocaleString()}:${new Date().getMinutes()}`
+      }
+    ]
+  }
+
+  renderItem = (data: any) => {
+    const { item } = data
+    console.log(item)
+    return (
+      <View style={styles.card}>
+        <Text>{item.location}</Text>
+        <Text>At {item.time}</Text>
+      </View>
+    )
+  }
+
+  renderList = () => (
+    <FlatList
+      keyExtractor={(item: any) => item.id.toString()}
+      renderItem={(item: any) => this.renderItem(item)}
+      data={this.state.appointments}
+    />
+  )
+
   render() {
-    const appointmentCount = 0
+    const appointmentCount = 3
+
     return (
       <View style={styles.container}>
-        <Card appointmentCount={0} style={styles.card}>
+        <Card style={styles.card}>
           <View style={styles.row}>
-            <View>
-              <Text style={[GlobalStyles.text, styles.cardText]}>You have</Text>
-              <Text style={[GlobalStyles.text, styles.cardText]}>
-                upcoming appointments
-              </Text>
-            </View>
             <View>
               <Text
                 style={[
@@ -25,18 +52,22 @@ export default class Home extends Component {
                   { color: appointmentCount > 0 ? Primary : Danger }
                 ]}
               >
-                {0}
+                {appointmentCount}
               </Text>
             </View>
+            <Text style={[GlobalStyles.text, styles.cardText]}>
+              Upcoming appointments
+            </Text>
           </View>
         </Card>
+        {this.renderList()}
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: GlobalStyles.container,
+  container: { ...GlobalStyles.container, marginTop: 10 },
   counterStyle: {
     fontSize: 32,
     marginHorizontal: 5
