@@ -29,13 +29,14 @@ export interface ButtonProps {
 }
 
 export interface CardProps {
-  style?: any[]
-  appointmentCount: number
+  style?: any
+  appointmentCount?: number
+  children?: any
 }
 
 export interface TextInputProps {
-  onChangeText: any
-  value: string
+  onChangeText?: any
+  value?: string
   label?: string
   isFocused?: boolean
   setFocus?: any

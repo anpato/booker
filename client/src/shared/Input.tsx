@@ -37,7 +37,7 @@ export const Input = (props: TextInputProps) => {
     <View style={styles.inputWrapper}>
       <Animated.Text
         style={
-          props.value.length || isFocused
+          (props.value && props.value.length) || isFocused
             ? [
                 {
                   ...styles.label,
@@ -48,7 +48,7 @@ export const Input = (props: TextInputProps) => {
             : [styles.label, { transform: [{ translateY: animatedValue }] }]
         }
       >
-        {upperCaser(props.label)}
+        {props.label ? upperCaser(props.label) : null}
       </Animated.Text>
       <TextInput
         onFocus={handleFocus}
@@ -56,11 +56,11 @@ export const Input = (props: TextInputProps) => {
         placeholder={props.placeholder}
         autoCompleteType="off"
         secureTextEntry={
-          props.label.toLowerCase() === 'password' ? true : false
+          props.label && props.label.toLowerCase() === 'password' ? true : false
         }
         onEndEditing={Keyboard.dismiss}
         style={
-          props.value.length || isFocused
+          (props.value && props.value.length) || isFocused
             ? [styles.input, styles.inputFocused]
             : [styles.input]
         }
