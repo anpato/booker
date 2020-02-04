@@ -6,6 +6,7 @@ import {
   VerifcationToken
 } from '../database/Schema'
 import { ErrorHandler } from '../middleware/error'
+
 export const CheckIfSlotIsAvailable = async (req, res, next) => {
   try {
     const ExistingAppointment = await Appointment.findOne().where({

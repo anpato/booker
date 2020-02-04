@@ -1,12 +1,16 @@
 import { Schema } from 'mongoose'
-
+import uuid from 'uuid/v4'
 const VerificationTokenModel = new Schema(
   {
+    _id: {
+      type: String,
+      default: uuid
+    },
     token: {
       type: String
     },
     user_id: {
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: 'users'
     },
     expire_at: {

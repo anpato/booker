@@ -1,7 +1,7 @@
 import faker from 'faker'
 import fs from 'fs'
 import chalk from 'chalk'
-import { Types } from 'mongoose'
+import uuid from 'uuid/v4'
 
 const createTimes = () => {
   let times = []
@@ -20,7 +20,7 @@ const createTimes = () => {
 
 const createAddress = () => {
   const addressData = {
-    _id: Types.ObjectId(),
+    _id: uuid(),
     address_line: faker.address.streetAddress(),
     zip_code: faker.address.zipCode(),
     city: faker.address.city(),
@@ -39,6 +39,7 @@ const createBusinesses = lenOfItems => {
   for (let i = 0; i < lenOfItems; i++) {
     const address = createAddress()
     const business = {
+      _id: uuid(),
       name: faker.company.companyName(),
       address: address._id,
       hours: createTimes(),
@@ -48,8 +49,7 @@ const createBusinesses = lenOfItems => {
     businesses.push(business)
     addresses.push(address.data)
   }
-  writeToJSONFile('Businesses', JSON.stringify(businesses, null, 2))
-  writeToJSONFile('Addresses', JSON.stringify(addresses, null, 2))
+  return { businesses, addresses }
 }
 
 const createEmployee = lenOfItems => {
@@ -57,6 +57,7 @@ const createEmployee = lenOfItems => {
 
   for (let index = 0; index < lenOfItems; index++) {
     const employee = {
+      _id: uuid(),
       name: faker.name.findName(),
       profile_img: faker.image.avatar(),
       email: faker.internet.email(),
@@ -65,13 +66,14 @@ const createEmployee = lenOfItems => {
     }
     employees.push(employee)
   }
-  writeToJSONFile('Employees', JSON.stringify(employees, null, 2))
+  return employees
 }
 
 const createUsers = async lenOfItems => {
   let users = []
   for (let index = 0; index < lenOfItems; index++) {
     const user = {
+      _id: uuid(),
       name: faker.name.findName(),
       email: faker.internet.email(),
       password_digest: faker.random.uuid(),
@@ -79,7 +81,7 @@ const createUsers = async lenOfItems => {
     }
     users.push(user)
   }
-  writeToJSONFile('Users', JSON.stringify(users, null, 2))
+  return users
 }
 
 const writeToJSONFile = (filename, data) =>
@@ -94,7 +96,8 @@ const writeToJSONFile = (filename, data) =>
 export const CreateSeedFiles = async () => {
   console.info(chalk.greenBright('Generating Seed Data'))
   const lenOfItems = 4000
-  await createBusinesses(lenOfItems)
-  await createEmployee(lenOfItems)
-  await createUsers(lenOfItems)
+  const { businesses, addresses } = await createBusinesses(lenOfItems)
+  const employees = await createEmployee(lenOfItems)
+  const users = await createUsers(lenOfItems)
+  return { businesses, addresses, employees, users }
 }

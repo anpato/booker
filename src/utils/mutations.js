@@ -36,7 +36,7 @@ export const AddBusinessIdToEmployee = async (
     await Employee.updateOne(
       { _id: employee_id },
       {
-        business_id: Types.ObjectId(business_id)
+        business_id: business_id
       }
     )
   } catch (error) {

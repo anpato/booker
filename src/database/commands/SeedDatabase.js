@@ -21,7 +21,7 @@ const InsertData = async (businesses, employees, addresses) => {
     const employeeData = await mutations.InsertEmployeeMutation(employees)
     await mutations.InsertAddressesMutation(addresses)
     console.info(chalk.green('Creating Associations'))
-
+    console.log(businessData, employeeData)
     employeeData.forEach(async (employee, index) => {
       await mutations.AddBusinessIdToEmployee(
         employee._id,
@@ -35,36 +35,13 @@ const InsertData = async (businesses, employees, addresses) => {
   } catch (error) {
     throw error
   } finally {
-    process.exit()
+    // process.exit()
   }
 }
 
 const main = async () => {
-  CreateSeedFiles().then(() => {
-    readFile(
-      __dirname + '/../data/Employees.json',
-      'utf8',
-      (err, employees) => {
-        readFile(
-          __dirname + '/../data/Businesses.json',
-          'utf8',
-          (err, businesses) => {
-            readFile(
-              __dirname + '/../data/Addresses.json',
-              'utf8',
-              async (err, addresses) => {
-                await InsertData(
-                  JSON.parse(businesses),
-                  JSON.parse(employees),
-                  JSON.parse(addresses)
-                )
-              }
-            )
-          }
-        )
-      }
-    )
-  })
+  const { businesses, employees, addresses } = await CreateSeedFiles()
+  await InsertData(businesses, employees, addresses)
 }
 
 const run = async () => {
@@ -72,7 +49,7 @@ const run = async () => {
   database.ConnectDB()
   try {
     await main()
-    await SeedTests()
+    // await SeedTests()
   } catch (error) {
     throw error
   }

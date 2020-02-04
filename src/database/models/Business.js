@@ -1,10 +1,15 @@
 import { Schema } from 'mongoose'
+import uuid from 'uuid/v4'
 
 const BusinessModel = new Schema(
   {
+    _id: {
+      type: String,
+      default: uuid
+    },
     name: String,
     address: {
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: 'addresses'
     },
     hours: [
@@ -18,7 +23,7 @@ const BusinessModel = new Schema(
     employees: {
       type: [
         {
-          type: Schema.Types.ObjectId,
+          type: String,
           ref: 'employees'
         }
       ]

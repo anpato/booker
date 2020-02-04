@@ -1,15 +1,19 @@
 import { Schema } from 'mongoose'
-
+import uuid from 'uuid/v4'
 const AppointmentModel = new Schema(
   {
+    _id: {
+      type: String,
+      default: uuid
+    },
     slot: String,
     employee_id: {
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: 'employees'
     },
     day: Date,
     user: {
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: 'users'
     },
     isCanceled: Boolean
