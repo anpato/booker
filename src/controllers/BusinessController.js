@@ -26,11 +26,18 @@ class BusinessController {
 
   getBusinessById = async (req, res) => {
     try {
-      await Business.findOne({
-        _id: req.params.business_id
-      })
-        .populate('employees')
-        .exec((err, data) => res.send(data))
+      const business = await Business.aggregate([
+        { $match: { _id: req.params.business_id } },
+        {
+          $lookup: {
+            from: 'employees',
+            localField: '_id',
+            foreignField: 'business_id',
+            as: 'employees'
+          }
+        }
+      ])
+      res.send(business)
     } catch (error) {
       throw error
     }

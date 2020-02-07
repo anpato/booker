@@ -21,21 +21,16 @@ const InsertData = async (businesses, employees, addresses) => {
     const employeeData = await mutations.InsertEmployeeMutation(employees)
     await mutations.InsertAddressesMutation(addresses)
     console.info(chalk.green('Creating Associations'))
-    console.log(businessData, employeeData)
-    employeeData.forEach(async (employee, index) => {
+
+    return employeeData.reduce(async (promise, employee, index) => {
       await mutations.AddBusinessIdToEmployee(
         employee._id,
         businessData[index]._id
       )
-    })
-    const enteredEmployees = await resolvers.FindEmployees()
-    await enteredEmployees.reduce(async (promise, employee) => {
-      await mutations.AddEmployeeIdToBusiness(employee)
+      return promise
     }, Promise.resolve())
   } catch (error) {
     throw error
-  } finally {
-    // process.exit()
   }
 }
 
@@ -52,6 +47,8 @@ const run = async () => {
     // await SeedTests()
   } catch (error) {
     throw error
+  } finally {
+    process.exit()
   }
 }
 

@@ -34,6 +34,17 @@ class EmployeeController {
       throw error
     }
   }
+
+  FindEmployeesFromBusinnes = async (req, res) => {
+    try {
+      const employess = await Employee.find({
+        business_id: req.params.business_id
+      })
+      res.send(employess)
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 export default EmployeeController

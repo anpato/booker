@@ -34,70 +34,47 @@ const createAddress = () => {
 }
 
 const createBusinesses = lenOfItems => {
-  const businesses = []
   const addresses = []
-  for (let i = 0; i < lenOfItems; i++) {
-    const address = createAddress()
-    const business = {
-      _id: uuid(),
-      name: faker.company.companyName(),
-      address: address._id,
-      hours: createTimes(),
-      employees: [],
-      phone_number: faker.phone.phoneNumber()
-    }
-    businesses.push(business)
-    addresses.push(address.data)
+  return {
+    businesses: [...Array(lenOfItems)].map(() => {
+      const address = createAddress()
+      addresses.push(address.data)
+      return {
+        _id: uuid(),
+        name: faker.company.companyName(),
+        address_id: address._id,
+        hours: createTimes(),
+        phone_number: faker.phone.phoneNumber()
+      }
+    }),
+    addresses
   }
-  return { businesses, addresses }
 }
 
-const createEmployee = lenOfItems => {
-  let employees = []
+const createEmployee = lenOfItems =>
+  [...Array(lenOfItems)].map(() => ({
+    _id: uuid(),
+    name: faker.name.findName(),
+    profile_img: faker.image.avatar(),
+    email: faker.internet.email(),
+    business_id: null,
+    isAdmin: faker.random.boolean()
+  }))
 
-  for (let index = 0; index < lenOfItems; index++) {
-    const employee = {
-      _id: uuid(),
-      name: faker.name.findName(),
-      profile_img: faker.image.avatar(),
-      email: faker.internet.email(),
-      business_id: null,
-      isAdmin: faker.random.boolean()
-    }
-    employees.push(employee)
-  }
-  return employees
-}
-
-const createUsers = async lenOfItems => {
-  let users = []
-  for (let index = 0; index < lenOfItems; index++) {
-    const user = {
-      _id: uuid(),
-      name: faker.name.findName(),
-      email: faker.internet.email(),
-      password_digest: faker.random.uuid(),
-      isVerified: faker.random.boolean()
-    }
-    users.push(user)
-  }
-  return users
-}
-
-const writeToJSONFile = (filename, data) =>
-  fs.writeFile(
-    `${process.cwd()}/./src/database/data/${filename}.json`,
-    data,
-    err => {
-      if (err) throw err
-    }
-  )
+const createUsers = lenOfItems =>
+  [...Array(lenOfItems)].map(() => ({
+    _id: uuid(),
+    name: faker.name.findName(),
+    email: faker.internet.email(),
+    password_digest: faker.random.uuid(),
+    isVerified: faker.random.boolean()
+  }))
 
 export const CreateSeedFiles = async () => {
   console.info(chalk.greenBright('Generating Seed Data'))
   const lenOfItems = 4000
-  const { businesses, addresses } = await createBusinesses(lenOfItems)
-  const employees = await createEmployee(lenOfItems)
-  const users = await createUsers(lenOfItems)
+  const { businesses, addresses } = createBusinesses(lenOfItems)
+  const employees = createEmployee(lenOfItems)
+  const users = createUsers(lenOfItems)
   return { businesses, addresses, employees, users }
 }

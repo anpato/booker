@@ -2,7 +2,7 @@
 @port = 3001
 @baseurl = http://{{hostname}}:{{port}}/api
 @contentType = application/json
-@business_id = 5e17d52abefd53d9697375d5
+@business_id = f8fa3e6b-53a9-4076-b933-57b42f625232
 ### GET BUSINESSES
 
 #  Can be formated as query like so: businesses/?page=1

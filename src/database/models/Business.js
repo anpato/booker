@@ -8,7 +8,7 @@ const BusinessModel = new Schema(
       default: uuid
     },
     name: String,
-    address: {
+    address_id: {
       type: String,
       ref: 'addresses'
     },
@@ -19,15 +19,7 @@ const BusinessModel = new Schema(
         close_time: String
       }
     ],
-    phone_number: String,
-    employees: {
-      type: [
-        {
-          type: String,
-          ref: 'employees'
-        }
-      ]
-    }
+    phone_number: String
   },
   {
     timeStamps: true
