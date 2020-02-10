@@ -10,7 +10,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --exec babel-node ./src/App.js",
+    "dev": "babel src --out-dir dist && nodemon dist/App.js",
     "db:seed": " babel-node ./src/database/commands/SeedDatabase.js ",
     "db:drop": "babel-node ./src/database/commands/DropDatabase.js",
     "db:reset": "yarn db:drop && yarn db:seed",
@@ -37,6 +37,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.8.5",
     "morgan": "^1.9.1",
+    "pg": "^7.18.1",
+    "typeorm": "^0.2.22",
     "uuid": "^3.4.0"
   },
   "devDependencies": {
@@ -44,6 +46,7 @@
     "@babel/core": "^7.7.7",
     "@babel/node": "^7.7.7",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/preset-env": "^7.7.7",
     "nodemon": "^2.0.2"
   }

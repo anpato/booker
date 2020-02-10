@@ -2,7 +2,7 @@ import express from 'express'
 import Router from './routes'
 import Database from './database/Database'
 import chalk from 'chalk'
-import { HandleError, ErrorHandler } from './middleware/error'
+// import { HandleError, ErrorHandler } from './middleware/error'
 
 class Server {
   constructor(port, middleWare, baseroute) {

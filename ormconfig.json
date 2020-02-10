@@ -1,0 +1,16 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": "5432",
+  "database": "booker_development",
+  "logging": true,
+  "synchronize": true,
+  "entities": ["dist/database/entity/*.js"],
+  "subscribers": ["dist/database/subscriber/*.js"],
+  "migrations": ["dist/database/migration/*.js"],
+  "cli": {
+    "entitiesDir": "dist/entity",
+    "migrationsDir": "dist/migration",
+    "subscribersDir": "dist/subscriber"
+  }
+}

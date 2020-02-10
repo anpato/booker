@@ -1,5 +1,6 @@
 import Database from '../Database'
-import { readFile, read } from 'fs'
+import { Connection, createConnection } from 'typeorm'
+import { Business, User } from '../entity'
 import { CreateSeedFiles } from './CreateSeeds'
 import TestEmployees from '../data/TestEmployees'
 import TestBusiness from '../data/TestBusiness'
@@ -16,12 +17,12 @@ import chalk from 'chalk'
 
 const InsertData = async (businesses, employees, addresses) => {
   try {
+    const connection = await createConnection()
     console.info(chalk.green('Inserting JSON Files'))
     const businessData = await mutations.InsertBusinessesMutation(businesses)
     const employeeData = await mutations.InsertEmployeeMutation(employees)
     await mutations.InsertAddressesMutation(addresses)
     console.info(chalk.green('Creating Associations'))
-
     return employeeData.reduce(async (promise, employee, index) => {
       await mutations.AddBusinessIdToEmployee(
         employee._id,
